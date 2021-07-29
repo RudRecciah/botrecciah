@@ -1,58 +1,54 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import fse from "fs-extra";
+import discord from "discord.js";
+import readline from "readline";
 
 module.exports = class Main {
   
   static async main() {
-    this.Discord = require("discord.js");
-    this.Config = require("../resources/config.json");
-    //init bot
-    const client = new this.Discord.Client();
+
+    //load config
+    this.config = null;
+    if(await fse.pathExists("../../data/config.json")) {
+      this.config = require("../../data/config.json");
+    }else{
+      this.config = require("../resources/config.json");
+    }
+
+    //setup bot
+    const client = new discord.Client();
     client.once("ready", () => {
       console.log("We have logged in.");
       console.log("Node.js Application Loaded");
       this.cli();
     });
-    await client.login(this.Config.token);
+
+    //log in
+    await client.login(this.config.token);
   }
 
   static cli() {
-
-    const readline = require("readline");
-
-    const questions = [
-      ["Can the fox be recursive?", "O_o"],
-      ["Can readline be non-recursive?", "Yep"]
-    ];
-
-    const cmd = readline.createInterface({
+    //init cli
+    const cli = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
-
-    function askQuestion() {
-      if(!questions.length) {
-        return cmd.close();
+    const commands = {
+      help: "Lists commands."
+    };
+    cli.question("", command => {
+      switch(command) {
+        case "help":
+          console.log("%cCommands:", "font-weight:bold");
+          console.log(commands);
+          break;
+        default:
+          console.log("Unknown command! Use \"help\" for help.");
       }
-      cmd.output.write(`${questions[0][0]} `);
-      cmd.resume();
-    }
-
-    function checkAnswer(answer) {
-      if(answer === questions[0][1]) {
-        cmd.output.write("Correct!\n");
-      }else{
-        cmd.output.write("Wrong!\n");
-      }
-      questions.shift();
-      cmd.pause();
-    }
-
-    cmd.on("pause", askQuestion);
-
-    cmd.on("line", checkAnswer);
-
-    askQuestion();
+      cli.close();
+      this.cli();
+    });
   }
 
 };

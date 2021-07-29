@@ -36,6 +36,7 @@
     "core-js": "^3.15.2",
     "discord.js": "^12.5.3",
     "eslint": "^7.31.0",
+    "fs-extra": "^10.0.0",
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2"
   }

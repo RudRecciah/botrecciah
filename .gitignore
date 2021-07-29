@@ -105,4 +105,4 @@ dist
 
 resources/config.json
 
-./build
+build

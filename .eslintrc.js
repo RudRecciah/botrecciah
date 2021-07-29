@@ -31,7 +31,7 @@ module.exports = {
             "async": {"before": true, "after": true},
             "await": {"before": true, "after": true},
             "break": {"before": false, "after": false},
-            "case": {"before": false, "after": false},
+            "case": {"before": false, "after": true},
             "catch": {"before": false, "after": false},
             "class": {"before": true, "after": true},
             "const": {"before": false, "after": true},
@@ -89,7 +89,10 @@ module.exports = {
     ],
     "indent": [
       "error",
-      2
+      2,
+      {
+        "SwitchCase": 1,
+      }
     ],
     "quotes": [
       "error",
