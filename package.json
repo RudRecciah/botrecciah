@@ -2,20 +2,20 @@
   "name": "botrecciah",
   "version": "1.0.0",
   "description": "My discord bot.",
-  "main": "dist/main.mjs",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && node dist/Main.js",
-    "transpile": "babel ./src --out-dir dist",
-    "clean": "rimraf dist",
-    "build": "npm-run-all clean transpile"
+    "start": "npm run build && node .",
+    "build": "rimraf build && babel src --out-dir build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RudRecciah/botrecciah.git"
   },
   "babel": {
-    "presets": ["@babel/preset-env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "keywords": [
     "bot",
@@ -31,10 +31,12 @@
   "dependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
+    "@babel/eslint-parser": "^7.14.7",
     "@babel/preset-env": "^7.14.8",
+    "core-js": "^3.15.2",
     "discord.js": "^12.5.3",
-    "nodemon": "^2.0.12",
-    "npm-run-all": "^4.1.5",
+    "eslint": "^7.31.0",
+    "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2"
   }
 }
