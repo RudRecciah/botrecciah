@@ -10,6 +10,12 @@ var _discord = _interopRequireDefault(require("discord.js"));
 
 var _readline = _interopRequireDefault(require("readline"));
 
+var _Utils = _interopRequireDefault(require("./Utils.js"));
+
+var _CommandController = _interopRequireDefault(require("./commands/CommandController.js"));
+
+var _CliController = _interopRequireDefault(require("./cli/CliController.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -30,51 +36,78 @@ module.exports = /*#__PURE__*/function () {
   _createClass(Main, null, [{
     key: "main",
     value: function () {
-      var _main = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var _main = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var _this = this;
 
         var client;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 //load config
                 this.config = null;
-                _context.next = 3;
+                this.dev = false;
+                _context2.next = 4;
                 return _fsExtra["default"].pathExists("../../data/config.json");
 
-              case 3:
-                if (!_context.sent) {
-                  _context.next = 7;
+              case 4:
+                if (!_context2.sent) {
+                  _context2.next = 8;
                   break;
                 }
 
                 this.config = require("../../data/config.json");
-                _context.next = 8;
+                _context2.next = 10;
                 break;
 
-              case 7:
-                this.config = require("../resources/config.json");
-
               case 8:
+                this.config = require("../resources/config.json");
+                this.dev = true;
+
+              case 10:
                 //setup bot
-                client = new _discord["default"].Client();
-                client.once("ready", function () {
-                  console.log("We have logged in.");
-                  console.log("Node.js Application Loaded");
+                client = new _discord["default"].Client({
+                  intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]
+                });
+                client.once("ready", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          console.log("We have logged in.");
+                          console.log("Node.js Application Loaded");
 
-                  _this.cli();
-                }); //log in
+                          if (_this.dev) {
+                            _Utils["default"].sendMessage(client, "822194899469860867", "transkezbian");
+                          }
 
-                _context.next = 12;
+                          _context.next = 5;
+                          return _CommandController["default"].registerCommands(client, _this.dev);
+
+                        case 5:
+                          _context.next = 7;
+                          return _CommandController["default"].prepareResponses(client);
+
+                        case 7:
+                          _CliController["default"].cli();
+
+                        case 8:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee);
+                }))); //log in
+
+                _context2.next = 14;
                 return client.login(this.config.token);
 
-              case 12:
+              case 14:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function main() {
@@ -83,36 +116,6 @@ module.exports = /*#__PURE__*/function () {
 
       return main;
     }()
-  }, {
-    key: "cli",
-    value: function cli() {
-      var _this2 = this;
-
-      //init cli
-      var cli = _readline["default"].createInterface({
-        input: process.stdin,
-        output: process.stdout
-      });
-
-      var commands = {
-        help: "Lists commands."
-      };
-      cli.question("", function (command) {
-        switch (command) {
-          case "help":
-            console.log("%cCommands:", "font-weight:bold");
-            console.log(commands);
-            break;
-
-          default:
-            console.log("Unknown command! Use \"help\" for help.");
-        }
-
-        cli.close();
-
-        _this2.cli();
-      });
-    }
   }]);
 
   return Main;

@@ -34,7 +34,7 @@
     "@babel/eslint-parser": "^7.14.7",
     "@babel/preset-env": "^7.14.8",
     "core-js": "^3.15.2",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.0.0-dev.2675b08.1627603447",
     "eslint": "^7.31.0",
     "fs-extra": "^10.0.0",
     "regenerator-runtime": "^0.13.9",
