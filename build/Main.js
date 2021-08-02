@@ -8,13 +8,9 @@ var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _discord = _interopRequireDefault(require("discord.js"));
 
-var _readline = _interopRequireDefault(require("readline"));
-
 var _Utils = _interopRequireDefault(require("./Utils.js"));
 
-var _CommandController = _interopRequireDefault(require("./commands/CommandController.js"));
-
-var _CliController = _interopRequireDefault(require("./cli/CliController.js"));
+var _InfoCommand = _interopRequireDefault(require("./info/InfoCommand.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -70,6 +66,7 @@ module.exports = /*#__PURE__*/function () {
                   intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]
                 });
                 client.once("ready", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                  var Info;
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
@@ -78,20 +75,18 @@ module.exports = /*#__PURE__*/function () {
                           console.log("Node.js Application Loaded");
 
                           if (_this.dev) {
-                            _Utils["default"].sendMessage(client, "822194899469860867", "transkezbian");
+                            _Utils["default"].sendEmbed(client, "822194899469860867", "This is a random message", "that I send when authenticated.");
                           }
 
-                          _context.next = 5;
-                          return _CommandController["default"].registerCommands(client, _this.dev);
+                          Info = new _InfoCommand["default"](client);
+                          _context.next = 6;
+                          return Info.init();
 
-                        case 5:
-                          _context.next = 7;
-                          return _CommandController["default"].prepareResponses(client);
+                        case 6:
+                          //run cli
+                          _Utils["default"].cli(client);
 
                         case 7:
-                          _CliController["default"].cli();
-
-                        case 8:
                         case "end":
                           return _context.stop();
                       }
