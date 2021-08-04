@@ -19,7 +19,7 @@ export default class InfoCommand {
         .addField("Learn more", "Check out [my site](https://rudrecciah.dev/).")
         .setFooter("BotRecciah", "https://raw.githubusercontent.com/RudRecciah/files/main/botrecciah.png")
         .toJSON();
-      await interaction.reply({embeds: [info]});
+      await interaction.editReply({embeds: [info]});
     });
   }
 

@@ -12,18 +12,24 @@ export default class Utils {
   }
 
   static async makeCommand(client, data, callback) {
+    //make command
     await client.application?.commands.create(data);
+    //wait for command to be created and respond if so after deferring
     client.on("interactionCreate", async interaction => {
       if(interaction.isCommand() && interaction.commandName === data.name){
+        await interaction.defer();
         callback(interaction);
       }
     });
   }
 
   static async makeGuildCommand(client, data, guild, callback) {
+    //make command
     await client.guilds.cache.get(guild)?.commands.create(data);
+    //wait for command to be created and respond if so after deferring
     client.on("interactionCreate", async interaction => {
       if(interaction.isCommand() && interaction.commandName === data.name){
+        await interaction.defer();
         callback(interaction);
       }
     });

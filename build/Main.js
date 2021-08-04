@@ -12,6 +12,8 @@ var _Utils = _interopRequireDefault(require("./Utils.js"));
 
 var _InfoCommand = _interopRequireDefault(require("./info/InfoCommand.js"));
 
+var _RulesCommand = _interopRequireDefault(require("./rules/RulesCommand.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -66,7 +68,7 @@ module.exports = /*#__PURE__*/function () {
                   intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]
                 });
                 client.once("ready", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                  var Info;
+                  var Info, Rules;
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
@@ -83,10 +85,15 @@ module.exports = /*#__PURE__*/function () {
                           return Info.init();
 
                         case 6:
+                          Rules = new _RulesCommand["default"](client);
+                          _context.next = 9;
+                          return Rules.init();
+
+                        case 9:
                           //run cli
                           _Utils["default"].cli(client);
 
-                        case 7:
+                        case 10:
                         case "end":
                           return _context.stop();
                       }

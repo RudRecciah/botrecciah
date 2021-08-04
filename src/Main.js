@@ -4,6 +4,7 @@ import fse from "fs-extra";
 import Discord from "discord.js";
 import Utils from "./Utils.js";
 import InfoCommand from "./info/InfoCommand.js";
+import RulesCommand from "./rules/RulesCommand.js";
 
 module.exports = class Main {
   
@@ -27,6 +28,8 @@ module.exports = class Main {
       }
       const Info = new InfoCommand(client);
       await Info.init();
+      const Rules = new RulesCommand(client);
+      await Rules.init();
       //run cli
       Utils.cli(client);
     });
