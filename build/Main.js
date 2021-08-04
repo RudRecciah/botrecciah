@@ -14,6 +14,8 @@ var _InfoCommand = _interopRequireDefault(require("./info/InfoCommand.js"));
 
 var _RulesCommand = _interopRequireDefault(require("./rules/RulesCommand.js"));
 
+var _OopTrigger = _interopRequireDefault(require("./oop/OopTrigger.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -93,13 +95,17 @@ module.exports = /*#__PURE__*/function () {
                           return new _RulesCommand["default"](client).init();
 
                         case 8:
+                          _context.next = 10;
+                          return new _OopTrigger["default"](client).init();
+
+                        case 10:
                           //run cli
                           _Utils["default"].cli(client); //log load message for pterodactyl
 
 
                           console.log("Node.js Application Loaded");
 
-                        case 10:
+                        case 12:
                         case "end":
                           return _context.stop();
                       }
