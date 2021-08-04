@@ -12,8 +12,9 @@ export default class RulesCommand {
       //make and send rules embed
       const rules = new Discord.MessageEmbed()
         .setColor("#5865F2")
-        .setTitle("ServerRecciah Rules")
-        .setDescription("1. Be nice.")
+        .setTitle("Rules")
+        .setDescription("By participating in this server, you agree to these rules. Failure to follow them may result in your being banned from the server.")
+        .addField("Rule 1:", "Be nice.")
         .setFooter("BotRecciah", "https://raw.githubusercontent.com/RudRecciah/files/main/botrecciah.png")
         .toJSON();
       await interaction.editReply({embeds: [rules]});

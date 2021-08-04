@@ -22,16 +22,18 @@ module.exports = class Main {
     const client = new Discord.Client({intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]});
     client.once("ready", async () => {
       console.log("We have logged in.");
-      console.log("Node.js Application Loaded");
       if(this.dev) {
         Utils.sendEmbed(client, "822194899469860867", "This is a random message", "that I send when authenticated.");
       }
-      const Info = new InfoCommand(client);
-      await Info.init();
-      const Rules = new RulesCommand(client);
-      await Rules.init();
+      //set status
+      await client.user.setActivity("over ServerRecciah", {type: "WATCHING"});
+      //init commands
+      await new InfoCommand(client).init();
+      await new RulesCommand(client).init();
       //run cli
       Utils.cli(client);
+      //log load message for pterodactyl
+      console.log("Node.js Application Loaded");
     });
     //log in
     await client.login(this.config.token);

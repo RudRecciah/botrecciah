@@ -68,30 +68,36 @@ module.exports = /*#__PURE__*/function () {
                   intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]
                 });
                 client.once("ready", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-                  var Info, Rules;
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
                           console.log("We have logged in.");
-                          console.log("Node.js Application Loaded");
 
                           if (_this.dev) {
                             _Utils["default"].sendEmbed(client, "822194899469860867", "This is a random message", "that I send when authenticated.");
-                          }
+                          } //set status
 
-                          Info = new _InfoCommand["default"](client);
+
+                          _context.next = 4;
+                          return client.user.setActivity("over ServerRecciah", {
+                            type: "WATCHING"
+                          });
+
+                        case 4:
                           _context.next = 6;
-                          return Info.init();
+                          return new _InfoCommand["default"](client).init();
 
                         case 6:
-                          Rules = new _RulesCommand["default"](client);
-                          _context.next = 9;
-                          return Rules.init();
+                          _context.next = 8;
+                          return new _RulesCommand["default"](client).init();
 
-                        case 9:
+                        case 8:
                           //run cli
-                          _Utils["default"].cli(client);
+                          _Utils["default"].cli(client); //log load message for pterodactyl
+
+
+                          console.log("Node.js Application Loaded");
 
                         case 10:
                         case "end":
