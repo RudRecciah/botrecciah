@@ -6,6 +6,7 @@ import Utils from "./Utils.js";
 import InfoCommand from "./info/InfoCommand.js";
 import RulesCommand from "./rules/RulesCommand.js";
 import OopTrigger from "./oop/OopTrigger.js";
+import WebCommand from "./web/WebCommand.js";
 
 module.exports = class Main {
   
@@ -32,6 +33,7 @@ module.exports = class Main {
       await new InfoCommand(client).init();
       await new RulesCommand(client).init();
       await new OopTrigger(client).init();
+      await new WebCommand(client).init();
       //run cli
       Utils.cli(client);
       //log load message for pterodactyl
