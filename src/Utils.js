@@ -89,11 +89,18 @@ export default class Utils {
             console.error("Invalid arguments!");
           }
           break;
+        case "stop":
+          console.log("Node.js Application Unloaded");
+          this.exit = true;
+          break;
         default:
           console.log("Unknown command! Use \"help\" for help.");
           break;
       }
       cli.close();
+      if(this.exit) {
+        process.exit(0);
+      }
       this.cli(client);
     });
   }
