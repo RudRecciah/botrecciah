@@ -15,9 +15,7 @@ export default class Utils {
   static async makeCommand(client, data, callback) {
     //make command
     const config = await this.getConfig();
-    console.log(config);
     if(config.dev) {
-      console.log("YEY");
       await client.guilds.cache.get(config.devGuild).commands.create(data);
     }else{
       await client.application?.commands.create(data);

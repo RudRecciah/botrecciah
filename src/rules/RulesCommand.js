@@ -8,7 +8,7 @@ export default class RulesCommand {
   }
 
   async init() {
-    await Utils.makeCommand(this.client, {name: "rules", description: "View the rules of ServerRecciah."}, "822194899469860864", async interaction => {
+    await Utils.makeCommand(this.client, {name: "rules", description: "View the rules of ServerRecciah."}, async interaction => {
       //make and send rules embed
       const rules = new Discord.MessageEmbed()
         .setColor("#5865F2")

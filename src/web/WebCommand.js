@@ -8,7 +8,7 @@ export default class WebCommand {
   }
 
   async init() {
-    await Utils.makeCommand(this.client, {name: "website", description: "Visit my website!"}, "822194899469860864", async interaction => {
+    await Utils.makeCommand(this.client, {name: "website", description: "Visit my website!"}, async interaction => {
       //make and send web embed
       const web = new Discord.MessageEmbed()
         .setColor("#5865F2")
