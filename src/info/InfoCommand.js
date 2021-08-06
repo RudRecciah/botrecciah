@@ -8,7 +8,7 @@ export default class InfoCommand {
   }
 
   async init() {
-    await Utils.makeGuildCommand(this.client, {name: "info", description: "Display bot and server information."}, "822194899469860864", async interaction => {
+    await Utils.makeCommand(this.client, {name: "info", description: "Display bot and server information."}, "822194899469860864", async interaction => {
       //make and send info embed
       const info = new Discord.MessageEmbed()
         .setColor("#5865F2")

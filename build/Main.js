@@ -18,6 +18,8 @@ var _OopTrigger = _interopRequireDefault(require("./oop/OopTrigger.js"));
 
 var _WebCommand = _interopRequireDefault(require("./web/WebCommand.js"));
 
+var _ProjectsCommand = _interopRequireDefault(require("./projects/ProjectsCommand.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -46,28 +48,14 @@ module.exports = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                //load config
-                this.config = null;
-                this.dev = false;
-                _context2.next = 4;
-                return _fsExtra["default"].pathExists("../../data/config.json");
+                console.log("Loading config...");
+                _context2.next = 3;
+                return _Utils["default"].getConfig();
 
-              case 4:
-                if (!_context2.sent) {
-                  _context2.next = 8;
-                  break;
-                }
+              case 3:
+                this.config = _context2.sent;
+                console.log("Config loaded"); //setup bot
 
-                this.config = require("../../data/config.json");
-                _context2.next = 10;
-                break;
-
-              case 8:
-                this.config = require("../resources/config.json");
-                this.dev = true;
-
-              case 10:
-                //setup bot
                 client = new _discord["default"].Client({
                   intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_WEBHOOKS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_MESSAGE_TYPING", "DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "DIRECT_MESSAGE_TYPING"]
                 });
@@ -76,9 +64,9 @@ module.exports = /*#__PURE__*/function () {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          console.log("We have logged in.");
+                          console.log("Bot authenticated");
 
-                          if (_this.dev) {
+                          if (_this.config.dev) {
                             _Utils["default"].sendEmbed(client, "822194899469860867", "This is a random message", "that I send when authenticated.");
                           } //set status
 
@@ -105,13 +93,17 @@ module.exports = /*#__PURE__*/function () {
                           return new _WebCommand["default"](client).init();
 
                         case 12:
+                          _context.next = 14;
+                          return new _ProjectsCommand["default"](client).init();
+
+                        case 14:
                           //run cli
                           _Utils["default"].cli(client); //log load message for pterodactyl
 
 
                           console.log("Node.js Application Loaded");
 
-                        case 14:
+                        case 16:
                         case "end":
                           return _context.stop();
                       }
@@ -119,10 +111,11 @@ module.exports = /*#__PURE__*/function () {
                   }, _callee);
                 }))); //log in
 
-                _context2.next = 14;
+                console.log("Authenticating bot");
+                _context2.next = 10;
                 return client.login(this.config.token);
 
-              case 14:
+              case 10:
               case "end":
                 return _context2.stop();
             }

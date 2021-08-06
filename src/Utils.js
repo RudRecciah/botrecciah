@@ -1,5 +1,6 @@
 import readline from "readline";
 import {getModulesPluginNames} from "@babel/preset-env";
+import fse from "fs-extra";
 
 export default class Utils {
 
@@ -13,7 +14,14 @@ export default class Utils {
 
   static async makeCommand(client, data, callback) {
     //make command
-    await client.application?.commands.create(data);
+    const config = await this.getConfig();
+    console.log(config);
+    if(config.dev) {
+      console.log("YEY");
+      await client.guilds.cache.get(config.devGuild).commands.create(data);
+    }else{
+      await client.application?.commands.create(data);
+    }
     //wait for command to be created and respond if so after deferring
     client.on("interactionCreate", async interaction => {
       if(interaction.isCommand() && interaction.commandName === data.name){
@@ -23,16 +31,16 @@ export default class Utils {
     });
   }
 
-  static async makeGuildCommand(client, data, guild, callback) {
-    //make command
-    await client.guilds.cache.get(guild)?.commands.create(data);
-    //wait for command to be created and respond if so after deferring
-    client.on("interactionCreate", async interaction => {
-      if(interaction.isCommand() && interaction.commandName === data.name){
-        await interaction.defer();
-        callback(interaction);
-      }
-    });
+  static async getConfig() {
+    //looks for config, if it cant find one it generates one
+    let config = {};
+    if(await fse.pathExists("./resources/config.json")) {
+      config = require("../resources/config.json");
+    }else{
+      config = {token: null, dev: false, devGuild: null};
+      await fse.writeJson("./resources/config.json", config);
+    }
+    return config;
   }
 
   static cli(client) {
